@@ -59,9 +59,9 @@ const Bio: React.FC = () => {
       {author?.name && (
         <p>
           Written by <strong>{author.name}</strong> {author?.summary || null}
-          {` `}
+          <br />
           <a href={`https://x.com/${social?.x || ``}`}>
-            You should follow them on X
+            Follow on X
           </a>
         </p>
       )}
