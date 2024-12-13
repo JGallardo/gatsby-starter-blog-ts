@@ -98,6 +98,11 @@ module.exports = {
                     frontmatter {
                       title
                       date
+                      featured {
+                        childImageSharp {
+                          gatsbyImageData(width: 100, height: 100, placeholder: BLURRED)
+                        }
+                      }
                     }
                   }
                 }
