@@ -15,7 +15,7 @@ module.exports = {
       summary: `who writes about things.`,
     },
     description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    siteUrl: `https://gatbsystarterblog.netlify.app/`,
     social: {
       x: `kylemathews`,
     },
@@ -124,6 +124,10 @@ module.exports = {
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
+    },
+    {
+      resolve: `gatsby-adapter-netlify`,
+      options: {},
     },
   ],
 };

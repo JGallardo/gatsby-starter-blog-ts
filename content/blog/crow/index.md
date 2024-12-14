@@ -5,8 +5,6 @@ description: "A Surprising Friendship in Japan"
 featured: "./featured.png"
 ---
 
-A Surprising Friendship in Japan
-
 I've always liked birds well enough, but never actively engaged with them beyond casual observation. That changed when I had some leftover bread getting stale and decided to leave it out for the local birds rather than waste it. 
 
 ![Stale bread](./bread.png)

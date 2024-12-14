@@ -3,6 +3,7 @@ import { Link, graphql, PageProps } from "gatsby";
 import { GatsbyImage, getImage, IGatsbyImageData } from "gatsby-plugin-image";
 
 import Bio from "../components/bio";
+import Hero from "../components/hero";
 import Layout from "../components/layout";
 import Seo from "../components/seo";
 
@@ -41,7 +42,7 @@ const BlogIndex: React.FC<BlogIndexProps> = ({ data, location }) => {
   if (posts.length === 0) {
     return (
       <Layout location={location} title={siteTitle}>
-        <Bio />
+        <Hero />
         <p>
           No blog posts found. Add markdown posts to "content/blog" (or the
           directory you specified for the "gatsby-source-filesystem" plugin in
@@ -53,7 +54,8 @@ const BlogIndex: React.FC<BlogIndexProps> = ({ data, location }) => {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <Bio />
+      <Hero />
+      <h2>Recent Posts</h2>
       <ol style={{ listStyle: `none` }}>
         {posts.map((post) => {
           const title = post.frontmatter.title || post.fields.slug;
@@ -108,6 +110,8 @@ const BlogIndex: React.FC<BlogIndexProps> = ({ data, location }) => {
           );
         })}
       </ol>
+      <hr />
+      <Bio />
     </Layout>
   );
 };
