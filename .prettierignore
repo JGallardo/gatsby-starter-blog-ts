@@ -1,4 +1,24 @@
+# Build artifacts (Gatsby)
 .cache
-package.json
-package-lock.json
 public
+
+# Dependencies
+node_modules
+
+# Lockfiles
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Env & OS junk
+.env
+.env.*
+.DS_Store
+
+# Binary assets
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.svg
+*.ico

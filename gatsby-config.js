@@ -11,17 +11,16 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby Starter Blog`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Blogger McBloggerface`,
+      summary: `who writes about things.`,
     },
     description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    siteUrl: `https://gatbsystarterblog.netlify.app/`,
     social: {
-      x: `kylemathews`,
+      x: `regulatorai`,
     },
   },
   plugins: [
-    `gatsby-plugin-typescript`,
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -54,6 +53,10 @@ module.exports = {
             },
           },
           `gatsby-remark-prismjs`,
+          {
+            resolve: `gatsby-remark-external-links`,
+            options: { target: `_blank`, rel: [`noopener`, `noreferrer`] },
+          },
         ],
       },
     },
@@ -77,14 +80,14 @@ module.exports = {
         feeds: [
           {
             serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.nodes.map((node) => ({
+              return allMarkdownRemark.nodes.map(node => ({
                 ...node.frontmatter,
                 description: node.excerpt,
                 date: node.frontmatter.date,
                 url: site.siteMetadata.siteUrl + node.fields.slug,
                 guid: site.siteMetadata.siteUrl + node.fields.slug,
                 custom_elements: [{ "content:encoded": node.html }],
-              }));
+              }))
             },
             query: `
               {
@@ -98,6 +101,11 @@ module.exports = {
                     frontmatter {
                       title
                       date
+                      featured {
+                        childImageSharp {
+                          gatsbyImageData(width: 100, height: 100, placeholder: BLURRED)
+                        }
+                      }
                     }
                   }
                 }
@@ -117,8 +125,12 @@ module.exports = {
         start_url: `/`,
         background_color: `#ffffff`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: `src/images/gatsby-icon.png`,
       },
     },
+    {
+      resolve: `gatsby-adapter-netlify`,
+      options: {},
+    },
   ],
-};
+}

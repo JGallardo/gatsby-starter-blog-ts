@@ -1,17 +1,17 @@
-import * as React from "react";
-import { Link } from "gatsby";
+import * as React from "react"
+import { Link } from "gatsby"
 
 type LayoutProps = {
   location: {
-    pathname: string;
-  };
-  title: string;
-  children: React.ReactNode;
-};
+    pathname: string
+  }
+  title: string
+  children: React.ReactNode
+}
 
 const Layout: React.FC<LayoutProps> = ({ location, title, children }) => {
-  const rootPath = `${__PATH_PREFIX__}/`;
-  const isRootPath = location.pathname === rootPath;
+  const rootPath = `${__PATH_PREFIX__}/`
+  const isRootPath = location.pathname === rootPath
 
   const header = isRootPath ? (
     <h1 className="main-heading">
@@ -21,7 +21,7 @@ const Layout: React.FC<LayoutProps> = ({ location, title, children }) => {
     <Link className="header-link-home" to="/">
       {title}
     </Link>
-  );
+  )
 
   return (
     <div className="global-wrapper" data-is-root-path={isRootPath}>
@@ -29,10 +29,10 @@ const Layout: React.FC<LayoutProps> = ({ location, title, children }) => {
       <main>{children}</main>
       <footer>
         © {new Date().getFullYear()}, Built with {` `}
-        <a href="https://www.gatsbyjs.com">Gatsby</a>
+        <a href="https://www.gatsbyjs.com" target="_blank" rel="noopener noreferrer">Gatsby</a>
       </footer>
     </div>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

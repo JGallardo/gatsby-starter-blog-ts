@@ -5,23 +5,23 @@
  * See: https://www.gatsbyjs.com/docs/how-to/querying-data/use-static-query/
  */
 
-import * as React from "react";
-import { useStaticQuery, graphql } from "gatsby";
-import { StaticImage } from "gatsby-plugin-image";
+import * as React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import { StaticImage } from "gatsby-plugin-image"
 
 type BioQueryData = {
   site: {
     siteMetadata: {
       author?: {
-        name: string;
-        summary?: string;
-      };
+        name: string
+        summary?: string
+      }
       social?: {
-        x?: string;
-      };
-    };
-  };
-};
+        x?: string
+      }
+    }
+  }
+}
 
 const Bio: React.FC = () => {
   const data = useStaticQuery<BioQueryData>(graphql`
@@ -38,11 +38,11 @@ const Bio: React.FC = () => {
         }
       }
     }
-  `);
+  `)
 
   // Set these values by editing "siteMetadata" in gatsby-config.js
-  const author = data.site.siteMetadata?.author;
-  const social = data.site.siteMetadata?.social;
+  const author = data.site.siteMetadata?.author
+  const social = data.site.siteMetadata?.social
 
   return (
     <div className="bio">
@@ -59,14 +59,12 @@ const Bio: React.FC = () => {
       {author?.name && (
         <p>
           Written by <strong>{author.name}</strong> {author?.summary || null}
-          {` `}
-          <a href={`https://x.com/${social?.x || ``}`}>
-            You should follow them on X
-          </a>
+          <br />
+          <a href={`https://x.com/${social?.x || ``}`}>Follow on X</a>
         </p>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Bio;
+export default Bio

@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Link, graphql, PageProps } from "gatsby";
+import { GatsbyImage, getImage, IGatsbyImageData } from "gatsby-plugin-image";
 
 import Bio from "../components/bio";
+import Hero from "../components/hero";
 import Layout from "../components/layout";
 import Seo from "../components/seo";
 
@@ -22,6 +24,12 @@ type BlogIndexProps = PageProps & {
           title: string;
           date: string;
           description?: string;
+          featuredAlt?: string;
+          featured?: {
+            childImageSharp: {
+              gatsbyImageData: IGatsbyImageData;
+            };
+          };
         };
       }>;
     };
@@ -35,7 +43,7 @@ const BlogIndex: React.FC<BlogIndexProps> = ({ data, location }) => {
   if (posts.length === 0) {
     return (
       <Layout location={location} title={siteTitle}>
-        <Bio />
+        <Hero />
         <p>
           No blog posts found. Add markdown posts to "content/blog" (or the
           directory you specified for the "gatsby-source-filesystem" plugin in
@@ -47,10 +55,15 @@ const BlogIndex: React.FC<BlogIndexProps> = ({ data, location }) => {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <Bio />
+      <Hero />
+      <h2>Recent Posts</h2>
       <ol style={{ listStyle: `none` }}>
         {posts.map((post) => {
           const title = post.frontmatter.title || post.fields.slug;
+          const featuredImage = post.frontmatter.featured
+            ? getImage(post.frontmatter.featured.childImageSharp.gatsbyImageData)
+            : null;
+          const alt = post.frontmatter.featuredAlt || title;
 
           return (
             <li key={post.fields.slug}>
@@ -58,28 +71,52 @@ const BlogIndex: React.FC<BlogIndexProps> = ({ data, location }) => {
                 className="post-list-item"
                 itemScope
                 itemType="http://schema.org/Article"
+                style={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  gap: "1rem",
+                }}
               >
-                <header>
-                  <h2>
-                    <Link to={post.fields.slug} itemProp="url">
-                      <span itemProp="headline">{title}</span>
-                    </Link>
-                  </h2>
-                  <small>{post.frontmatter.date}</small>
-                </header>
-                <section>
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: post.frontmatter.description || post.excerpt,
-                    }}
-                    itemProp="description"
-                  />
-                </section>
+                {featuredImage && (
+                  <Link to={post.fields.slug} aria-label={`Open ${title}`}>
+                    <GatsbyImage
+                      image={featuredImage}
+                      alt={alt}
+                      style={{ width: "150px", height: "150px", flexShrink: 0 }}
+                    />
+                  </Link>
+                )}
+                <div
+                  style={{
+                    flex: 1,
+                    width: featuredImage ? "auto" : "100%",
+                  }}
+                >
+                  <header>
+                    <h2>
+                      <Link to={post.fields.slug} itemProp="url">
+                        <span itemProp="headline">{title}</span>
+                      </Link>
+                    </h2>
+                    <small>{post.frontmatter.date}</small>
+                  </header>
+                  <section>
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          post.frontmatter.description || post.excerpt,
+                      }}
+                      itemProp="description"
+                    />
+                  </section>
+                </div>
               </article>
             </li>
           );
         })}
       </ol>
+      <hr />
+      <Bio />
     </Layout>
   );
 };
@@ -110,6 +147,12 @@ export const pageQuery = graphql`
           date(formatString: "MMMM DD, YYYY")
           title
           description
+          featuredAlt
+          featured {
+            childImageSharp {
+              gatsbyImageData(width: 150, height: 150, placeholder: BLURRED, quality: 85)
+            }
+          }
         }
       }
     }

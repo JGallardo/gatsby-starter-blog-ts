@@ -1,52 +1,52 @@
-import * as React from "react";
-import { Link, graphql, PageProps } from "gatsby";
+import * as React from "react"
+import { Link, graphql, PageProps } from "gatsby"
 
-import Bio from "../components/bio";
-import Layout from "../components/layout";
-import Seo from "../components/seo";
+import Bio from "../components/bio"
+import Layout from "../components/layout"
+import Seo from "../components/seo"
 
 type BlogPostTemplateProps = PageProps & {
   data: {
     site: {
       siteMetadata: {
-        title: string;
-      };
-    };
+        title: string
+      }
+    }
     markdownRemark: {
-      id: string;
-      excerpt: string;
-      html: string;
+      id: string
+      excerpt: string
+      html: string
       frontmatter: {
-        title: string;
-        date: string;
-        description?: string;
-      };
-    };
+        title: string
+        date: string
+        description?: string
+      }
+    }
     previous?: {
       fields: {
-        slug: string;
-      };
+        slug: string
+      }
       frontmatter: {
-        title: string;
-      };
-    };
+        title: string
+      }
+    }
     next?: {
       fields: {
-        slug: string;
-      };
+        slug: string
+      }
       frontmatter: {
-        title: string;
-      };
-    };
-  };
-  location: Location;
-};
+        title: string
+      }
+    }
+  }
+  location: Location
+}
 
 const BlogPostTemplate: React.FC<BlogPostTemplateProps> = ({
   data: { previous, next, site, markdownRemark: post },
   location,
 }) => {
-  const siteTitle = site.siteMetadata?.title || `Title`;
+  const siteTitle = site.siteMetadata?.title || `Title`
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -95,21 +95,26 @@ const BlogPostTemplate: React.FC<BlogPostTemplateProps> = ({
         </ul>
       </nav>
     </Layout>
-  );
-};
+  )
+}
 
-export const Head: React.FC<{ data: { markdownRemark: { frontmatter: { title: string; description?: string }; excerpt: string } } }> = ({
-  data: { markdownRemark: post },
-}) => {
+export const Head: React.FC<{
+  data: {
+    markdownRemark: {
+      frontmatter: { title: string; description?: string }
+      excerpt: string
+    }
+  }
+}> = ({ data: { markdownRemark: post } }) => {
   return (
     <Seo
       title={post.frontmatter.title}
       description={post.frontmatter.description || post.excerpt}
     />
-  );
-};
+  )
+}
 
-export default BlogPostTemplate;
+export default BlogPostTemplate
 
 export const pageQuery = graphql`
   query BlogPostBySlug(
@@ -149,4 +154,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
